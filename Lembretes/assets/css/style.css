@@ -1,0 +1,156 @@
+/* Reset e padrão */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Container principal */
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Cabeçalho */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.header .logo {
+    width: 80px;
+    margin-right: 15px;
+}
+
+h1 {
+    text-align: center;
+    color: #4CAF50;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+/* Estilos de formulário */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+label {
+    font-size: 1.1em;
+    color: #555;
+}
+
+select, input[type="text"], input[type="number"], input[type="date"], textarea {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+select:focus, input:focus, textarea:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+/* Botões */
+button {
+    padding: 12px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Tabelas e resultado */
+#resultados {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #ccc;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+
+p {
+    text-align: center;
+    color: #888;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    form {
+        gap: 10px;
+    }
+
+    label {
+        font-size: 1em;
+    }
+
+    select, input, button, textarea {
+        font-size: 0.9em;
+    }
+}
+
+/* Esconde todos os formulários por padrão */
+.form {
+    display: none;
+}
+
+a: h2 {
+    text-decoration: none;
+}
