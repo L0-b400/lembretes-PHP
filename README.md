@@ -1,6 +1,7 @@
 ***Projeto Refatorado e ajustado***
 
 Projeto Lembretes PHP
+
 Este projeto permite a criação, edição, visualização e exclusão de lembretes de maneira simples e intuitiva. Ele é desenvolvido com PHP, PDO (para conexão com o banco de dados), e permite que os usuários façam operações CRUD (Create, Read, Update, Delete) em uma lista de lembretes.
 
 Tecnologias Utilizadas
