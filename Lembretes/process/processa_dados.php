@@ -1,93 +1,90 @@
 <?php
-$servername = "127.0.0.1";
-$username = "root";
-$password = "";
-$dbname = "euro_consultoria";
-
-// Criar conexão
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar conexão
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require '../config/db.php';
 
 if (isset($_POST['action'])) {
     $action = $_POST['action'];
 
-    // Proteção básica contra SQL Injection
-    function sanitize($conn, $value) {
-        return mysqli_real_escape_string($conn, trim($value));
+    // Função de sanitização
+    function sanitize($value) {
+        return htmlspecialchars(trim($value), ENT_QUOTES, 'UTF-8');
     }
 
     switch ($action) {
         case 'lembrete':
-            $familia = sanitize($conn, $_POST['familia']);
+            $familia = sanitize($_POST['familia']);
             $requerentes = $_POST['requerente'];
-            $data_lembrete = sanitize($conn, $_POST['data_lembrete']);
-            $data_pagamento = sanitize($conn, $_POST['data_pagamento']);
+            $data_lembrete = sanitize($_POST['data_lembrete']);
+            $data_pagamento = sanitize($_POST['data_pagamento']);
+
+            $stmt = $pdo->prepare("INSERT INTO lembretes (familia, requerente, data_lembrete, data_pagamento)
+                                   VALUES (:familia, :requerente, :data_lembrete, :data_pagamento)");
 
             foreach ($requerentes as $requerente) {
-                $requerente = sanitize($conn, $requerente);
-                $sql = "INSERT INTO lembretes (familia, requerente, data_lembrete, data_pagamento)
-                        VALUES ('$familia', '$requerente', '$data_lembrete', '$data_pagamento')";
-                if (!$conn->query($sql)) {
-                    echo "Erro ao cadastrar lembrete para $requerente: " . $conn->error;
-                }
+                $stmt->execute([
+                    ':familia' => $familia,
+                    ':requerente' => sanitize($requerente),
+                    ':data_lembrete' => $data_lembrete,
+                    ':data_pagamento' => $data_pagamento
+                ]);
             }
 
             header("Location: ../index.php");
             exit;
 
         case 'apresentacao':
-            $familia = sanitize($conn, $_POST['familia']);
-            $data_apresentacao = sanitize($conn, $_POST['data_apresentacao']);
+            $familia = sanitize($_POST['familia']);
+            $data_apresentacao = sanitize($_POST['data_apresentacao']);
 
-            $sql = "INSERT INTO apresentacoes (familia, data_apresentacao)
-                    VALUES ('$familia', '$data_apresentacao')";
+            $stmt = $pdo->prepare("INSERT INTO apresentacoes (familia, data_apresentacao)
+                                   VALUES (:familia, :data_apresentacao)");
 
-            if ($conn->query($sql) === TRUE) {
-                header("Location: ../index.php");
-                exit;
-            } else {
-                echo "Erro ao cadastrar apresentação: " . $conn->error;
-            }
-            break;
+            $stmt->execute([
+                ':familia' => $familia,
+                ':data_apresentacao' => $data_apresentacao
+            ]);
+
+            header("Location: ../index.php");
+            exit;
 
         case 'negociacao':
-            $familia = sanitize($conn, $_POST['familia']);
-            $valor_acordado = sanitize($conn, $_POST['valor_acordado']);
-            $data_negociacao = sanitize($conn, $_POST['data_negociacao']);
-            $tipo_negociacao = sanitize($conn, $_POST['tipo_negociacao']);
-            $descricao = sanitize($conn, $_POST['descricao']);
+            $familia = sanitize($_POST['familia']);
+            $valor_acordado = sanitize($_POST['valor_acordado']);
+            $data_negociacao = sanitize($_POST['data_negociacao']);
+            $tipo_negociacao = sanitize($_POST['tipo_negociacao']);
+            $descricao = sanitize($_POST['descricao']);
 
-            $sql = "INSERT INTO negociacoes (familia, valor_acordado, data_negociacao, tipo_negociacao, descricao)
-                    VALUES ('$familia', '$valor_acordado', '$data_negociacao', '$tipo_negociacao', '$descricao')";
+            $stmt = $pdo->prepare("INSERT INTO negociacoes (familia, valor_acordado, data_negociacao, tipo_negociacao, descricao)
+                                   VALUES (:familia, :valor_acordado, :data_negociacao, :tipo_negociacao, :descricao)");
 
-            if ($conn->query($sql) === TRUE) {
-                header("Location: ../index.php");
-                exit;
-            } else {
-                echo "Erro ao cadastrar negociação: " . $conn->error;
-            }
-            break;
+            $stmt->execute([
+                ':familia' => $familia,
+                ':valor_acordado' => $valor_acordado,
+                ':data_negociacao' => $data_negociacao,
+                ':tipo_negociacao' => $tipo_negociacao,
+                ':descricao' => $descricao
+            ]);
+
+            header("Location: ../index.php");
+            exit;
 
         case 'aditivo':
-            $familia = sanitize($conn, $_POST['familia']);
-            $data_negociacao = sanitize($conn, $_POST['data_negociacao']);
-            $descricao = sanitize($conn, $_POST['descricao']);
-            $valor_acordado = sanitize($conn, $_POST['valor_acordado']);
+            $familia = sanitize($_POST['familia']);
+            $data_negociacao = sanitize($_POST['data_negociacao']);
+            $descricao = sanitize($_POST['descricao']);
+            $valor_acordado = sanitize($_POST['valor_acordado']);
 
-            $sql = "INSERT INTO aditivos (familia, data_negociacao, descricao, valor_acordado)
-                    VALUES ('$familia', '$data_negociacao', '$descricao', '$valor_acordado')";
+            $stmt = $pdo->prepare("INSERT INTO aditivos (familia, data_negociacao, descricao, valor_acordado)
+                                   VALUES (:familia, :data_negociacao, :descricao, :valor_acordado)");
 
-            if ($conn->query($sql) === TRUE) {
-                header("Location: ../index.php");
-                exit;
-            } else {
-                echo "Erro ao cadastrar aditivo: " . $conn->error;
-            }
-            break;
+            $stmt->execute([
+                ':familia' => $familia,
+                ':data_negociacao' => $data_negociacao,
+                ':descricao' => $descricao,
+                ':valor_acordado' => $valor_acordado
+            ]);
+
+            header("Location: ../index.php");
+            exit;
 
         default:
             echo "Ação inválida!";
@@ -95,5 +92,5 @@ if (isset($_POST['action'])) {
     }
 }
 
-$conn->close();
+$pdo = null; // Fechar a conexão com o banco de dados
 ?>

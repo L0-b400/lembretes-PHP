@@ -1,17 +1,5 @@
 <?php
-$servername = "sql211.infinityfree.com";
-$username = "if0_36488093";
-$password = "HJvH2wkGT3";
-$dbname = "if0_36488093_db";
-
-// Criar conexão
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar conexão
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
+require 'config/db.php';
 // Tabelas e colunas permitidas
 $allowedTables = ['lembretes'];
 $allowedColumns = ['titulo', 'descricao', 'data'];

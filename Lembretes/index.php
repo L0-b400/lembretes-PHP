@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatório de Atividades - EURO CONSULTORIA</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="nav.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/nav.css">
 </head>
 <body onload="adicionarRequerente()">
-    <?php include "navbar.php" ?>
+    <?php include "assets/navbar.php" ?>
 
     <div class="container">
         <header class="header">
-            <img src="Logo01.png" alt="Logo EURO CONSULTORIA" style="width: 120px;" class="logo">
+            <img src="assets/img/Logo01.png" alt="Logo EURO CONSULTORIA" style="width: 120px;" class="logo">
             <h1>EURO CONSULTORIA - Controle de Atividades</h1>
         </header>
 

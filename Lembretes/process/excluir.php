@@ -1,35 +1,30 @@
 <?php
-$servername = "sql211.infinityfree.com";
-$username = "if0_36488093";
-$password = "HJvH2wkGT3";
-$dbname = "if0_36488093_db";
-
-// Criar conexão
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar conexão
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require '../config/db.php';
 
 // Verifica se o ID foi passado na URL
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
     // Deletar o registro
-    $delete_sql = "DELETE FROM lembretes WHERE id = $id"; // Altere para a tabela necessária
+    $delete_sql = "DELETE FROM lembretes WHERE id = :id"; // Usando prepared statements para evitar SQL injection
 
-    if ($conn->query($delete_sql) === TRUE) {
+    // Preparar a consulta
+    $stmt = $pdo->prepare($delete_sql);
+
+    // Bind do parâmetro :id
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+    if ($stmt->execute()) {
         echo "Registro excluído com sucesso.";
-        header("Location: consulta.php"); // Redireciona para a página de consulta
+        header("Location: ../consulta.php"); // Redireciona para a página de consulta
         exit;
     } else {
-        echo "Erro ao excluir o registro: " . $conn->error;
+        echo "Erro ao excluir o registro.";
     }
 } else {
     echo "ID não fornecido.";
     exit;
 }
 
-$conn->close();
+$pdo = null; // Fechar a conexão PDO
 ?>

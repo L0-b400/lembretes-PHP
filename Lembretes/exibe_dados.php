@@ -1,16 +1,6 @@
 <?php
-$servername = "127.0.0.1";
-$username = "root";
-$password = "";
-$dbname = "euro_consultoria";
+require 'config/db.php';
 
-// Criar conexão
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificar conexão
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
 
 $show = isset($_GET['show']) ? $_GET['show'] : '';
 
